@@ -6,15 +6,11 @@ max = 1000000
 num_threads = 4
 connections = []
 count_connections = 0
-
 result = []
-
 
 def split_range(end):
     size = end / num_threads
-    print(size)
     parts = []
-
 
     for i in range(num_threads):
         part = [
@@ -22,8 +18,6 @@ def split_range(end):
             round(size * (i+1))
         ]
         parts.append(part)
-    print(parts)
-
     return parts
 
 def broadcast_parts(nums):
@@ -37,8 +31,6 @@ def broadcast_parts(nums):
 def start():
     global count_connections, num_threads
     server_socket = socket(AF_INET, SOCK_STREAM)
-
-
     print('Servidor iniciado!\n')
 
     with server_socket as ss:
@@ -64,9 +56,6 @@ def start():
                 print(f'Numero de Threads:{num_threads}\n')
                 print(f'Tempo de execução: {runtime}\n')
                 break
-
-
-
 
 server_thread = Thread(target=start)
 server_thread.start()
