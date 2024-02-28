@@ -10,13 +10,12 @@ def start():
     with client_socket as cs:
         cs.connect(('localhost', 65432))
         while True:
-            nums = cs.recv(4096000)
-            print("mensagem recebida!\n")
+            nums = cs.recv(409600000)
+            print("Calculando números primos.\n")
             break
         list_nums = pickle.loads(nums)
         print(prime_number.list_primes(list_nums))
         part = pickle.dumps(prime_number.list_primes(list_nums))
-        print(part)
         cs.send(part)
 
 

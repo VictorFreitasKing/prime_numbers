@@ -3,7 +3,7 @@ from prime_numbers import prime_number
 from multiprocessing import Pool
 
 if __name__ == '__main__':
-    max = 1000000
+    max = 100000
     num_threads = 8
 
     nums = []

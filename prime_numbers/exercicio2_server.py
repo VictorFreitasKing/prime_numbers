@@ -3,7 +3,7 @@ from threading import Thread
 from multiprocessing import Process
 import time, pickle
 
-max = 1000000
+max = 2000000
 num_threads = 4
 connections = []
 count_connections = 0
@@ -28,9 +28,11 @@ def broadcast_parts(nums):
 
 def receive_parts():
     parcial_results = []
-    for conn, addr in connections:
-        part = pickle.loads(conn.recv(4096000))
-        parcial_results.append(part)
+    count = 0
+    for i in range(0, count_connections):
+        conn, addr = connections[i]
+        part = conn.recv(409600000)
+        parcial_results.append(pickle.loads(part))
     for parcial_result in parcial_results:
         result.append(parcial_result)
 
@@ -52,15 +54,13 @@ def start():
 
             if count_connections == num_threads:
                 print('Iniciando programa!\n')
+                before = time.time()
                 broadcast_parts(split_range(max))
                 receive_parts()
+                after = time.time()
+                runtime = (after - before)
                 break
-
-        before = time.time()
-        Process(target=broadcast_parts, args= [split_range(max)]).run()
-        #
-        after = time.time()
-        runtime = (after - before)
+    Process(target=broadcast_parts, args=[split_range(max)])
     print('Resultado - Exercicio 2:\n')
     print(f'Numero de entradas: {max}\n')
     print(f'Numero de Threads:{num_threads}\n')
