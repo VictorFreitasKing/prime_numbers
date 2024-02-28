@@ -10,11 +10,14 @@ def start():
     with client_socket as cs:
         cs.connect(('localhost', 65432))
         while True:
-            nums = cs.recv(4096)
+            nums = cs.recv(4096000)
+            print("mensagem recebida!\n")
             break
         list_nums = pickle.loads(nums)
         print(prime_number.list_primes(list_nums))
-        cs.send(pickle.dumps(prime_number.list_primes(list_nums)))
+        part = pickle.dumps(prime_number.list_primes(list_nums))
+        print(part)
+        cs.send(part)
 
 
 client_thread = Thread(target=start())
