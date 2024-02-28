@@ -2,7 +2,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 import time, pickle
 
-max = 1000
+max = 1000000,
 num_threads = 4
 connections = []
 count_connections = 0
@@ -52,9 +52,16 @@ def start():
 
             if count_connections == num_threads:
                 print('Conexões  atingidas!\n')
+
+                before = time.time()
                 broadcast_parts(split_range(1, max))
+                after = time.time()
+                runtime = (after - before)
+                print('Resultado - Exercicio 2:\n')
+                print(f'Numero de entradas: {max}\n')
+                print(f'Numero de Threads:{num_threads}\n')
+                print(f'Tempo de execução: {runtime}\n')
                 break
-        print(result)
 
 
 
