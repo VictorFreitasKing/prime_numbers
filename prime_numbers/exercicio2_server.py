@@ -12,12 +12,13 @@ result = []
 
 def split_range(start, end):
     size = (end - start) / num_threads
+    var = start + size
     parts = []
 
     for i in range(num_threads):
         part = [
-            int(start + size * i),
-            int(start + size * (i + 1))
+            int(var * i),
+            int(var + size * (i + 1))
         ]
         parts.append(part)
         print(part)
