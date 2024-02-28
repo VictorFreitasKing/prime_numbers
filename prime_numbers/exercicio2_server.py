@@ -2,7 +2,7 @@ from socket import socket, AF_INET, SOCK_STREAM
 from threading import Thread
 import time, pickle
 
-max = 1000000,
+max = 1000000
 num_threads = 4
 connections = []
 count_connections = 0
@@ -10,18 +10,19 @@ count_connections = 0
 result = []
 
 
-def split_range(start, end):
-    size = (end - start) / num_threads
-    var = start + size
+def split_range(end):
+    size = end / num_threads
+    print(size)
     parts = []
+
 
     for i in range(num_threads):
         part = [
-            int(var * i),
-            int(var + size * (i + 1))
+            round(1 + size * i),
+            round(size * (i+1))
         ]
         parts.append(part)
-        print(part)
+    print(parts)
 
     return parts
 
@@ -55,7 +56,7 @@ def start():
                 print('Conexões  atingidas!\n')
 
                 before = time.time()
-                broadcast_parts(split_range(1, max))
+                broadcast_parts(split_range( max))
                 after = time.time()
                 runtime = (after - before)
                 print('Resultado - Exercicio 2:\n')
